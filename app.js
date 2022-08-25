@@ -1,5 +1,5 @@
 function Calculadora  (){
-    this.sumar =  ()=>{
+    let sumar =  ()=>{
         document.getElementById("suma").addEventListener("click",function(){
             let display = document.getElementById("display");
             a = display.innerText;
@@ -9,22 +9,45 @@ function Calculadora  (){
         })
     }
 
-    this.Res = () =>{
+    let Resta = () =>{
+        document.getElementById("resta").addEventListener("click",function(){
             let display = document.getElementById("display");
-            display.textContent= " ";
-            let a = 0;
-            let b = 0;
-            let signo="";
+            a = display.innerText;
+            console.log(a);
+            signo = "-";
+            let miTexto = document.getElementById("Clear").value;
+            document.getElementById("display").innerText = " ";
+        })
         
     }
-    this.rest = () =>{
+    let divicion = ()=>{
+        document.getElementById("divicion").addEventListener("click",function(){
+            let display = document.getElementById("display");
+            a = display.innerText;
+            console.log(a);
+            signo = "/";
+            let miTexto = document.getElementById("Clear").value;
+            document.getElementById("display").innerText = " ";
+        })
+    }
+    let multiplicacion = () =>{
+        document.getElementById("multiplicacion").addEventListener("click",function(){
+            let display = document.getElementById("display");
+            a = display.innerText;
+            console.log(a);
+            signo = "*";
+            let miTexto = document.getElementById("Clear").value;
+            document.getElementById("display").innerText = " ";
+        })
+    }
+    let rest = () =>{
         let display = document.getElementById("display");
         display.textContent= " ";
         let a = 0;
         let b = 0;
         let signo="";
     }
-    this.respuesta = () =>{
+    let respuesta = () =>{
         
             let display = document.getElementById("display");
             let respuesta = 0;
@@ -41,6 +64,12 @@ function Calculadora  (){
                 case "/":
                         respuesta = parseFloat(a) / parseFloat(b) ;
                     break;
+                case "^":
+                        respuesta = Math.sqrt(parseFloat(a))  ;
+                break;
+                case "$":
+                        respuesta = Math.abs(parseFloat(a))  ;
+                break;
                 default:
                     break;
             }
@@ -49,20 +78,45 @@ function Calculadora  (){
         
     }
 
-    return {sumar,Res,respuesta}
+    return {sumar,Resta,respuesta,rest,divicion,multiplicacion}
 }
 
 let a;
 let b;
 let signo;
-const Cal = Calculadora();
-Cal.sumar();
-Cal.Res()
-Cal.respuesta();
-// function calBasica(sumar){
-//     Calculadora.call(this,sumar);
-// }
+console.log(Calculadora.prototype)
+
+function calCientifica (){
+
+}
+calCientifica.prototype = Object.create(Calculadora.prototype)
+calCientifica.prototype.constructor = calCientifica;
+calCientifica.prototype.raiz = function(){
+    document.getElementById("raiz").addEventListener("click",function(){
+        let display = document.getElementById("display");
+        a = display.innerText;
+        signo = "^";
+        let miTexto = document.getElementById("Clear").value;
+        document.getElementById("display").innerText = " ";
+    })
+}
+calCientifica.prototype.valor = function(){
+    document.getElementById("va").addEventListener("click",function(){
+        let display = document.getElementById("display");
+        a = display.innerText;
+        signo = "$";
+        let miTexto = document.getElementById("Clear").value;
+        document.getElementById("display").innerText = " ";
+    })
+}
+let calculadoraCienfifica = new calCientifica();
+calculadoraCienfifica.raiz()
+calculadoraCienfifica.valor()
 let calBasica = new Calculadora();
+calBasica.sumar();
+calBasica.Resta()
+calBasica.divicion()
+calBasica.multiplicacion();
 
 document.getElementById("num7").addEventListener("click",function(){
     let miTexto = document.getElementById("num7").value;
@@ -127,8 +181,14 @@ document.getElementById("punto").addEventListener("click",function(){
 document.getElementById("Res").addEventListener("click",function(){
     let display = document.getElementById("display");
     b = display.innerText;
-    Cal.respuesta();
-    
+    calBasica.respuesta();
+})
+
+//limpiar pantalla
+document.getElementById("Clear").addEventListener("click",function(){
+    let miTexto = document.getElementById("Clear").value;
+    let display = document.getElementById("display");
+    document.getElementById("display").innerText = " ";
 })
 
 
